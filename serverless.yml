@@ -1,0 +1,28 @@
+service: auth0-valid-blocked-users
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - logs:CreateLogGroup
+            - logs:CreateLogStream
+            - logs:PutLogEvents
+            - dynamodb:PutItem
+            - dynamodb:GetItem
+          Resource: "*"
+  environment:
+    AUTH0_DOMAIN: ${file(./config/config.js):variables.auth0.${opt:stage, 'develop'}}
+    BLACKLIST_JWT_TABLE: ${file(./config/config.js):variables.blacklist_jwt_table.${opt:stage, 'develop'}}
+    AUTH0_NX_DOMAIN: ${file(./config/config.js):variables.auth0_nx.${opt:stage, 'develop'}}  
+
+functions:
+  - ${file(./functions/logs/auth0.yml)}
+
+resources:
+  - ${file(./resources/dynamodb.yml)}

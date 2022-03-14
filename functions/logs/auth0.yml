@@ -1,0 +1,7 @@
+auth0_aws_logs:
+  package:
+    patterns:
+      - "!**"
+      - "node_modules/axios/**"
+      - "src/logs/auth0.js"
+  handler: src/logs/auth0.handler
