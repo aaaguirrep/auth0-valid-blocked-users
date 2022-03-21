@@ -15,7 +15,7 @@ async function get_token(getSecrets) {
     const response = await axios.post(url, body)
     const access_token = await response.data.access_token
     await secrets.updateSecrets(access_token, date.setTime(date.getTime() + (23.9 * 60 * 60 * 1000)))
-    return { access_token, audience: getSecrets.audience }
+    return { access_token, domain: getSecrets.domain }
 }
 
 module.exports = async () => {
