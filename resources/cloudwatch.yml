@@ -1,0 +1,6 @@
+Resources:
+  queryValidBlockedUsers:
+    Type: AWS::Logs::QueryDefinition
+    Properties:
+      Name: validBlockedUsers
+      QueryString: "stats count(*) as hits by email | sort hits desc | limit 10000"
